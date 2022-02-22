@@ -1,0 +1,9 @@
+---
+#This template will only deploy a t2 micro EC2 instance
+Resources:
+
+  ec2Instance: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-0c6615d1e95c98aca"
+      InstanceType: t2.micro

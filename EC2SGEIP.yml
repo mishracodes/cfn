@@ -1,0 +1,37 @@
+---
+#This template will deploy a t2 micro EC2 instance, 2 Security Groups and one elastic IP
+Resources:
+
+  ec2Instance: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-0c6615d1e95c98aca"
+      InstanceType: t2.micro
+      SecurityGroups:
+      - !Ref publicSG
+      - !Ref SSHSG
+
+  MyEIP:
+    Type: AWS::EC2::EIP
+    Properties:
+      InstanceId: !Ref ec2Instance
+
+  publicSG:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+        GroupDescription: Allow http to client host
+        SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+
+  SSHSG:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+        GroupDescription: Allow ssh to client host
+        SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 59.89.99.189/32
